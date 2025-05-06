@@ -17,8 +17,9 @@ router
     [authenticate.authenticateUser, authenticate.authorizePermissions],
     productController.uploadImage
   );
+
 router
-  .route(":/id")
+  .route("/:id")
   .get(productController.getSingleProduct)
   .patch(
     [authenticate.authenticateUser, authenticate.authorizePermissions("admin")],

@@ -11,12 +11,17 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import productRouter from "./routes/productRoutes.js";
+import fileUpload from 'express-fileupload';
+import reviewRouter from './routes/reviewRoutes.js';
 const app = express();
 
 app.use(morgan("tiny"));
 app.use(express.json());
 //adding jwt_secret to cookiepareser- we r signing our cookies now
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(express.static('./public'));
+
+app.use(fileUpload());
 
 app.get("/", (req, res) => {
   res.send("e-commerce api");
@@ -32,7 +37,7 @@ app.get("/api/v1", (req, res) => {
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
-
+app.use('/api/v1/reviews', reviewRouter);
 
 //put error handling middleware below all routes
 app.use(errorHandlerMiddleware);
